@@ -8,6 +8,7 @@ authors = ["AceVentura7 <<>>"]
 python = "^3.8"
 bs4 = "^0.0.1"
 selenium = "^4.1.3"
+pandas = "^1.4.2"
 
 [tool.poetry.dev-dependencies]
 
