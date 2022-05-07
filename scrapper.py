@@ -3,6 +3,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
 import pandas as pd
+import smtplib
+import os
 
 yt_trending_url = 'https://www.youtube.com/feed/trending'
 
@@ -47,6 +49,7 @@ def parse_video(video):
   }
 
 if __name__=="__main__":
+ '''
   print('Creating Driver')
   driver = get_driver()
   
@@ -62,5 +65,37 @@ if __name__=="__main__":
   videos_df = pd.DataFrame(videos_data)
   print(videos_df)
   videos_df.to_csv('tending.csv', index=None)
+'''
+
+
+print('Send an email with the results')
+
+def send_email():
   
-  #title, channel, views, uploaded, description, thumbnail_url, url
+  try:
+    server_ssl = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server_ssl.ehlo()
+
+    sender_email = 'sendtrends7@gmail.com'
+    receiver_email = 'sendtrends7@gmail.com'  
+    my_secret = os.environ['gmail_pass']
+    print('Password:', my_secret)
+    subject = 'OMG Test Message from Replit'
+    body = 'Hey, this is a test email sent via replit using python'
+    
+    email_text = f"""
+    From: {sender_email}
+    To: {receiver_email}
+    
+    Subject: {subject}
+    
+    {body}
+    """
+    server_ssl.login(sender_email, my_secret)
+    server_ssl.sendmail(sender_email, receiver_email, email_text)
+    server_ssl.close()
+    
+  except:
+    print ('Something went wrong...')
+
+send_email()
